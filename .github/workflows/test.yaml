@@ -3,6 +3,9 @@ name: Workflow with JSON Step Names
 on:
   workflow_dispatch:
     inputs:
+      revision:
+        required: true
+        type: string    
       application_id:
         description: 'Application ID'
         required: true
@@ -16,17 +19,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: '{ "application_id": "${{ inputs.application_id }}", "environment_id": "${{ inputs.environment_id }}" }'
+      - name: Set revision
+        run: |
+          if [ "${{ inputs.revision }}" == "HEAD" ]; then
+            echo "REVISION=${{ github.sha }}" >> "$GITHUB_ENV"
+          else
+            echo "REVISION=${{ inputs.revision }}" >> "$GITHUB_ENV"
+          fi
+    
+      - name: '{ "application_id": "${{ inputs.application_id }}", "environment_id": "${{ inputs.environment_id }}", "revision": "${{env.REVISION}}" }'
         id: deploy
         run: echo "Running deployment..."
-
-      # Alternative way using a variable if you need to reuse it
-      - name: Set step name
-        id: set-name
-        run: |
-          echo "step_name={ \"application_id\": \"${{ inputs.application_id }}\", \"environment_id\": \"${{ inputs.environment_id }}\" }" >> $GITHUB_ENV
-
-      - name: ${{ env.step_name }}
-        id: another-step
-        run: echo "Another step..."
 
