@@ -1,0 +1,32 @@
+name: Workflow with JSON Step Names
+
+on:
+  workflow_dispatch:
+    inputs:
+      application_id:
+        description: 'Application ID'
+        required: true
+        type: string
+      environment_id:
+        description: 'Environment ID'
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: '{ \"application_id\": \"${{ inputs.application_id }}\", \"environment_id\": \"${{ inputs.environment_id }}\" }'
+        id: deploy
+        run: echo "Running deployment..."
+
+      # Alternative way using a variable if you need to reuse it
+      - name: Set step name
+        id: set-name
+        run: |
+          echo "step_name={ \"application_id\": \"${{ inputs.application_id }}\", \"environment_id\": \"${{ inputs.environment_id }}\" }" >> $GITHUB_ENV
+
+      - name: ${{ env.step_name }}
+        id: another-step
+        run: echo "Another step..."
+
