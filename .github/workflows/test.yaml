@@ -16,7 +16,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: '{ \"application_id\": \"${{ inputs.application_id }}\", \"environment_id\": \"${{ inputs.environment_id }}\" }'
+      - name: '{ "application_id": "${{ inputs.application_id }}", "environment_id": "${{ inputs.environment_id }}" }'
         id: deploy
         run: echo "Running deployment..."
 
