@@ -14,8 +14,14 @@ on:
         description: 'Environment ID'
         required: true
         type: string
+      environment_name:
+        required: true
+        type: string
 
-run-name: '{ \"application_id\": \"${{ inputs.application_id }}\", \"environment_id\": \"${{ inputs.environment_id }}\" }'
+run-name: |
+  ${{
+    input.revision == 'HEAD' ? format("{0}: revision {1}", inputs.environment_name, github.sha) : format("{0}: revision {1}", inputs.environment_name, inputs.revision) 
+  }}
 
 jobs:
   deploy:
