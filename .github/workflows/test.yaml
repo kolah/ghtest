@@ -17,12 +17,6 @@ on:
       environment_name:
         required: true
         type: string
-
-run-name: |
-  ${{
-        inputs.revision == 'HEAD' && format('{0}: revision {1}', inputs.environment_name, github.sha) || format('{0}: revision {1}', inputs.environment_name, inputs.revision) 
-  }}
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -39,3 +33,4 @@ jobs:
         id: deploy
         run: echo "Running deployment..."
 
+run-name: '${{ input.revision == ''HEAD'' && format(''{0}: revision {1}'', inputs.environment_name, github.sha) || format(''{0}: revision {1}'', inputs.environment_name, inputs.revision) }}'
