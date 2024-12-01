@@ -33,4 +33,4 @@ jobs:
         id: deploy
         run: echo "Running deployment..."
 
-run-name: '${{ input.revision == ''HEAD'' && format(''{0}: revision {1}'', inputs.environment_name, github.sha) || format(''{0}: revision {1}'', inputs.environment_name, inputs.revision) }}'
+run-name: '${{ input.revision == ''HEAD'' && format(''{0}: revision {1}'', input.environment_name, github.sha) || format(''{0}: revision {1}'', input.environment_name, input.revision) }}'
