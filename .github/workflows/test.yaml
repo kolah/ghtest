@@ -10,6 +10,10 @@ on:
         description: 'Application ID'
         required: true
         type: string
+      application_name:
+        description: 'Application Name'
+        required: true
+        type: string        
       environment_id:
         description: 'Environment ID'
         required: true
@@ -18,7 +22,7 @@ on:
         required: true
         type: string
 
-run-name: "TestBuild (${{inputs.environment_name}}): { \"revision\": \"${{inputs.revision == 'HEAD' && github.sha || inputs.revision}}\", \"environment_id\": \"${{inputs.environment_id}}\", \"application_id\": \"${{inputs.application_id}}\" }"
+run-name: "TestPlanner build (${{inputs.environment_name}}): { \"revision\": \"${{inputs.revision == 'HEAD' && github.sha || inputs.revision}}\", \"environment_id\": \"${{inputs.environment_id}}\", \"application_id\": \"${{inputs.application_id}}\", \"application_name\": \"${{inputs.application_name}}\" }"
 
 jobs:
   deploy:
