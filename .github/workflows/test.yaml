@@ -18,7 +18,7 @@ on:
         required: true
         type: string
 
-run-name: "TestBuild (${{inputs.environment_name}}): { \"revision\": \"${{inputs.revision == 'HEAD' && github.sha || inputs.revision}}\""
+run-name: "TestBuild (${{inputs.environment_name}}): { \"revision\": \"${{inputs.revision == 'HEAD' && github.sha || inputs.revision}}\", \"environment_id\": \"${{inputs.environment_id}}\", \"application_id\": \"${{inputs.application_id}}\" }"
 
 jobs:
   deploy:
