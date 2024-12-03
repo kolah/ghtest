@@ -17,6 +17,9 @@ on:
       environment_name:
         required: true
         type: string
+
+run-name: "TestBuild (${{inputs.environment_name}}): { \"revision\": \"${{input.revision == 'HEAD' && github.sha || inputs.revision}}\""
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
